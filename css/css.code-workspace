@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../images"
+		},
+		{
+			"path": "../js"
+		},
+		{
+			"path": "../models"
+		},
+		{
+			"path": "../node_modules"
+		}
+	]
+}
