@@ -1,0 +1,9 @@
+node_modules
+server.js
+db.js
+portfolio.db
+.env
+.env.*
+netlify.toml
+DEPLOYMENT_GUIDE.md
+*.log
