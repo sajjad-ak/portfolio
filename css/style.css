@@ -503,6 +503,9 @@ nav ul li a.active::after {
 }
 
 .about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     transition: var(--transition);
