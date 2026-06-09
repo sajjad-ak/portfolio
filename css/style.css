@@ -488,6 +488,8 @@ nav ul li a.active::after {
 
 .about-image {
     position: relative;
+    max-width: 320px;
+    margin: 0 auto;
 }
 
 .about-image::before {
@@ -1456,45 +1458,61 @@ footer::before {
 /* ============================== */
 .reveal {
     opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(40px) rotate(-1deg);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .reveal.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) rotate(0);
+}
+
+/* Add slight alternating rotation to project cards to mimic manga/zine style */
+.project-item {
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.project-item:nth-child(odd) {
+    transform: rotate(-1.5deg);
+}
+.project-item:nth-child(even) {
+    transform: rotate(1.5deg);
+}
+.project-item:hover {
+    transform: translateY(-10px) rotate(0deg) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .reveal-left {
     opacity: 0;
-    transform: translateX(-60px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-40px) rotate(-1deg);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .reveal-left.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) rotate(0);
 }
 
 .reveal-right {
     opacity: 0;
-    transform: translateX(60px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(40px) rotate(1deg);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .reveal-right.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) rotate(0);
 }
 
 .reveal-scale {
     opacity: 0;
-    transform: scale(0.85);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scale(0.9);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .reveal-scale.visible {
