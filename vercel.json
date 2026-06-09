@@ -4,7 +4,8 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/contact", "destination": "/api/contact" }
+    { "source": "/api/contact", "destination": "/api/contact" },
+    { "source": "/api/messages", "destination": "/api/messages" }
   ],
   "headers": [
     {

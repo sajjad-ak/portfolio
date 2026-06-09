@@ -1,9 +1,16 @@
 const nodemailer = require('nodemailer');
 
+// Shared in-memory storage (note: each serverless function instance has its own memory)
+let messages = [];
+
 module.exports = async function handler(req, res) {
-  // Only allow POST
+  if (req.method === 'GET') {
+    // Allow the admin dashboard to fetch messages from this endpoint too
+    return res.status(200).json(messages.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
@@ -14,6 +21,18 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    // Store message in memory
+    const msg = {
+      id: Date.now(),
+      name,
+      email,
+      subject,
+      message,
+      created_at: new Date().toISOString(),
+      is_read: 0
+    };
+    messages.push(msg);
+
     // Send email notification if credentials are configured
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       const transporter = nodemailer.createTransport({
@@ -38,7 +57,7 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, id: msg.id });
   } catch (error) {
     console.error('Contact form error:', error);
     return res.status(500).json({ error: 'Internal server error' });

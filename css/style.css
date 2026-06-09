@@ -1392,3 +1392,528 @@ footer::before {
     font-size: 0.9rem;
     color: #ccc;
 }
+
+/* ============================== */
+/* Background Grain Texture       */
+/* ============================== */
+.grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+}
+
+/* ============================== */
+/* Floating Particles Background  */
+/* ============================== */
+.particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: radial-gradient(circle, rgba(201, 177, 138, 0.6), transparent);
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+}
+
+.particle:nth-child(1) { left: 10%; animation-duration: 18s; animation-delay: 0s; width: 4px; height: 4px; }
+.particle:nth-child(2) { left: 25%; animation-duration: 22s; animation-delay: 3s; }
+.particle:nth-child(3) { left: 40%; animation-duration: 15s; animation-delay: 1s; width: 5px; height: 5px; }
+.particle:nth-child(4) { left: 55%; animation-duration: 20s; animation-delay: 5s; }
+.particle:nth-child(5) { left: 70%; animation-duration: 17s; animation-delay: 2s; width: 4px; height: 4px; }
+.particle:nth-child(6) { left: 85%; animation-duration: 25s; animation-delay: 4s; }
+.particle:nth-child(7) { left: 15%; animation-duration: 19s; animation-delay: 6s; }
+.particle:nth-child(8) { left: 50%; animation-duration: 23s; animation-delay: 1.5s; width: 4px; height: 4px; }
+.particle:nth-child(9) { left: 65%; animation-duration: 16s; animation-delay: 3.5s; }
+.particle:nth-child(10) { left: 90%; animation-duration: 21s; animation-delay: 7s; width: 5px; height: 5px; }
+
+@keyframes floatParticle {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; transform: translateY(90vh) scale(1); }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+}
+
+/* ============================== */
+/* Cinematic Scroll-In Animations */
+/* ============================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Staggered reveal delays */
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
+/* ============================== */
+/* Enhanced Hover Effects         */
+/* ============================== */
+.project-dropdown {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.project-dropdown:hover {
+    transform: translateY(-3px) rotate(-0.3deg);
+    box-shadow: 0 12px 40px rgba(201, 177, 138, 0.12);
+    border-color: rgba(201, 177, 138, 0.35);
+}
+
+.project-dropdown summary:hover {
+    background: linear-gradient(135deg, rgba(201, 177, 138, 0.2), rgba(212, 195, 168, 0.12));
+}
+
+.skill-category {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(201, 177, 138, 0.08);
+    border-color: rgba(201, 177, 138, 0.4);
+}
+
+.contact-item {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    border-color: rgba(201, 177, 138, 0.4);
+}
+
+.btn {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 177, 138, 0.3);
+}
+
+.secondary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 177, 138, 0.2);
+}
+
+/* ============================== */
+/* Hire Me / CTA Section          */
+/* ============================== */
+.hire-me {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #121212 50%, #1a1a1a 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hire-me::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent 0%, rgba(201, 177, 138, 0.03) 25%, transparent 50%, rgba(201, 177, 138, 0.03) 75%, transparent 100%);
+    animation: rotateConic 30s linear infinite;
+}
+
+@keyframes rotateConic {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hire-me-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.hire-me .caption-tag {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a68b5b;
+    margin-bottom: 1.5rem;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid rgba(201, 177, 138, 0.3);
+    border-radius: 30px;
+    background: rgba(201, 177, 138, 0.08);
+}
+
+.hire-me h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #e8d5b7;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    text-shadow: 0 0 30px rgba(201, 177, 138, 0.2);
+}
+
+.hire-me p {
+    font-size: 1.15rem;
+    color: #9a8f7a;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+}
+
+.hire-me-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hire-me-actions .btn {
+    padding: 1rem 2.2rem;
+    font-size: 1.05rem;
+    border-radius: 8px;
+}
+
+.hire-me-actions .btn i {
+    margin-right: 0.5rem;
+}
+
+/* Glowing border animation on hire-me buttons */
+.hire-me-actions .primary-btn {
+    background: var(--gradient-primary);
+    border: none;
+    position: relative;
+}
+
+.hire-me-actions .primary-btn::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #c9b18a, #e8d5b7, #c9b18a);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.hire-me-actions .primary-btn:hover::before {
+    opacity: 1;
+}
+
+/* ============================== */
+/* Profile Picture Alignment Fix  */
+/* ============================== */
+.about-image {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.about-image img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+}
+
+/* ============================== */
+/* Responsive Overhaul            */
+/* ============================== */
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-left, .reveal-right, .reveal-scale {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .particle {
+        animation: none !important;
+    }
+    .grain-overlay {
+        display: none;
+    }
+}
+
+/* Touch devices: disable hover transforms that cause jank */
+@media (hover: none) {
+    .project-dropdown:hover {
+        transform: none;
+    }
+    .skill-category:hover {
+        transform: none;
+    }
+    .contact-item:hover {
+        transform: none;
+    }
+    .social-links a:hover {
+        transform: none;
+    }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .about-image {
+        margin-bottom: 2rem;
+    }
+
+    .about-image img {
+        max-width: 280px;
+    }
+
+    .hire-me h2 {
+        font-size: 2.2rem;
+    }
+
+    .hire-me p {
+        font-size: 1.05rem;
+    }
+}
+
+/* Mobile Landscape & Portrait */
+@media (max-width: 768px) {
+    .hamburger span {
+        background-color: #c9b18a;
+    }
+
+    .hero-content {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-buttons .btn {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.8rem;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .about-content {
+        text-align: center;
+    }
+
+    .about-image::before {
+        display: none;
+    }
+
+    .about-image img {
+        max-width: 220px;
+        margin: 0 auto;
+    }
+
+    .about-buttons {
+        text-align: center;
+    }
+
+    .hire-me h2 {
+        font-size: 1.8rem;
+    }
+
+    .hire-me p {
+        font-size: 1rem;
+    }
+
+    .hire-me-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hire-me-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .timeline::before {
+        left: 15px;
+    }
+
+    .timeline-dot {
+        left: 15px;
+    }
+
+    .timeline-content {
+        width: calc(100% - 50px) !important;
+        left: 50px !important;
+    }
+
+    .timeline-content::before {
+        left: -10px !important;
+        right: auto !important;
+    }
+
+    .contact-content {
+        gap: 2rem;
+    }
+
+    .contact-form {
+        padding: 1.5rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 576px) {
+    .hero {
+        padding-top: 60px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+
+    .profession {
+        font-size: 1rem;
+    }
+
+    .hero-car-intro,
+    .hero-description {
+        font-size: 0.95rem;
+    }
+
+    .about {
+        padding: 5rem 0;
+    }
+
+    .skills {
+        padding: 5rem 0;
+    }
+
+    .experience {
+        padding: 5rem 0;
+    }
+
+    .projects {
+        padding: 5rem 0;
+    }
+
+    .contact {
+        padding: 5rem 0;
+    }
+
+    .hire-me {
+        padding: 4rem 0;
+    }
+
+    .hire-me h2 {
+        font-size: 1.5rem;
+    }
+
+    .about-image img {
+        max-width: 180px;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* iOS Safari fix for backdrop-filter */
+@supports (-webkit-touch-callout: none) {
+    .hero-content,
+    header,
+    .skill-category {
+        -webkit-backdrop-filter: blur(20px);
+    }
+}
+
+/* Fix overflow on mobile */
+html, body {
+    overflow-x: hidden;
+}

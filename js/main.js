@@ -234,4 +234,22 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         setTimeout(typeWriter, 1000);
     }
+
+    // ============================
+    // Cinematic Scroll Reveal
+    // ============================
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+        revealObserver.observe(el);
+    });
 });
