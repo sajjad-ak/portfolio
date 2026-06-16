@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Sajjad Akbar Khan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary:   #c9b18a;
+      --primary-l: #d4c4a8;
+      --secondary: #e8d5b7;
+      --accent:    #b8a07a;
+      --bg:        #121212;
+      --surface:   rgba(30, 30, 30, 0.85);
+      --border:    rgba(201, 177, 138, 0.2);
+      --text-muted:#9a8f7a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--primary);
+      overflow: hidden;
+    }
+
+    /* ── Animated canvas background ──────────────────────────── */
+    canvas#login-bg {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Center card ─────────────────────────────────────────── */
+    .login-wrap {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+
+    .login-card {
+      background: var(--surface);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.8rem 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+      animation: cardIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity:0; transform: translateY(30px) scale(0.97); }
+      to   { opacity:1; transform: translateY(0)    scale(1); }
+    }
+
+    /* ── Header ──────────────────────────────────────────────── */
+    .login-logo {
+      display: flex; align-items: center; justify-content: center;
+      width: 68px; height: 68px;
+      margin: 0 auto 1.4rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(201,177,138,.15), rgba(232,213,183,.08));
+      border: 1px solid var(--border);
+    }
+    .login-logo i {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #c9b18a, #e8d5b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .login-title {
+      text-align: center;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--primary-l);
+      margin-bottom: 0.3rem;
+      text-shadow: 0 0 14px rgba(201,177,138,.25);
+    }
+
+    .login-subtitle {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+    }
+
+    /* ── Form ────────────────────────────────────────────────── */
+    .form-group {
+      position: relative;
+      margin-bottom: 1.4rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex; align-items: center;
+    }
+
+    .input-wrap i.prefix {
+      position: absolute; left: 1rem;
+      color: var(--primary);
+      opacity: 0.5;
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.6rem;
+      background: rgba(18,18,18,.8);
+      border: 1px solid rgba(201,177,138,.25);
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      color: var(--primary-l);
+      transition: border-color .25s, box-shadow .25s;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(201,177,138,.12);
+    }
+
+    .toggle-pw {
+      position: absolute; right: 0.9rem;
+      background: transparent; border: none;
+      color: var(--text-muted);
+      cursor: pointer; font-size: 0.9rem;
+      transition: color .2s;
+    }
+    .toggle-pw:hover { color: var(--primary); }
+
+    /* ── Submit ──────────────────────────────────────────────── */
+    .login-btn {
+      width: 100%;
+      padding: 0.9rem;
+      border: none; border-radius: 10px;
+      background: linear-gradient(135deg, #c9b18a, #d4c4a8);
+      color: #121212;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201,177,138,.35);
+    }
+    .login-btn:active { transform: translateY(0); }
+    .login-btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+    .login-btn .btn-text { display: flex; align-items: center; justify-content: center; gap: .5rem; }
+
+    /* ── Error / success banner ──────────────────────────────── */
+    .alert {
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      margin-bottom: 1.2rem;
+      font-size: .88rem;
+      display: none;
+      align-items: center; gap: .5rem;
+    }
+    .alert.visible { display: flex; }
+    .alert.error   { background: rgba(220,38,38,.1); border: 1px solid rgba(220,38,38,.3); color: #fca5a5; }
+    .alert.success { background: rgba(22,163,74,.1);  border: 1px solid rgba(22,163,74,.3);  color: #86efac; }
+
+    /* ── Back link ───────────────────────────────────────────── */
+    .back-link {
+      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: .85rem;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--primary); }
+
+    /* ── Security badge ──────────────────────────────────────── */
+    .security-badge {
+      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      margin-top: 1.5rem;
+      font-size: .78rem;
+      color: rgba(201,177,138,.35);
+    }
+    .security-badge i { font-size: .7rem; }
+  </style>
+</head>
+<body>
+
+  <canvas id="login-bg"></canvas>
+
+  <div class="login-wrap">
+    <div class="login-card">
+
+      <div class="login-logo">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+
+      <h1 class="login-title">Admin Access</h1>
+      <p class="login-subtitle">Enter your admin token to view messages</p>
+
+      <div class="alert error" id="error-msg" role="alert">
+        <i class="fas fa-circle-exclamation"></i>
+        <span id="error-text">Invalid token. Access denied.</span>
+      </div>
+
+      <div class="alert success" id="success-msg" role="status">
+        <i class="fas fa-circle-check"></i>
+        <span>Authenticated! Redirecting…</span>
+      </div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="token">Admin Token</label>
+          <div class="input-wrap">
+            <i class="fas fa-key prefix"></i>
+            <input
+              type="password"
+              id="token"
+              name="token"
+              placeholder="Enter your secret token"
+              required
+              autocomplete="current-password"
+            >
+            <button type="button" class="toggle-pw" id="togglePw" aria-label="Toggle visibility">
+              <i class="fas fa-eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text" id="btnText">
+            <i class="fas fa-unlock-keyhole"></i> Sign In
+          </span>
+        </button>
+      </form>
+
+      <a href="/" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Portfolio
+      </a>
+
+      <div class="security-badge">
+        <i class="fas fa-lock"></i>
+        Session expires in 4 hours
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Mini neural-net bg (same as main site) ─────────────────
+    (function () {
+      const canvas = document.getElementById('login-bg');
+      const ctx    = canvas.getContext('2d');
+      const GOLD   = [201, 177, 138];
+      let W, H, nodes = [], rafId, pulseT = 0;
+
+      class Node {
+        constructor() {
+          this.x  = Math.random() * W;
+          this.y  = Math.random() * H;
+          this.r  = 1.5 + Math.random() * 2;
+          const sp = 0.15 + Math.random() * 0.25;
+          const a  = Math.random() * Math.PI * 2;
+          this.vx = Math.cos(a) * sp;
+          this.vy = Math.sin(a) * sp;
+          this.alpha = 0.3 + Math.random() * 0.4;
+          this.po = Math.random() * Math.PI * 2;
+        }
+        update() {
+          this.x += this.vx; this.y += this.vy;
+          if (this.x < -10) this.x = W + 10;
+          if (this.x > W + 10) this.x = -10;
+          if (this.y < -10) this.y = H + 10;
+          if (this.y > H + 10) this.y = -10;
+        }
+        draw() {
+          const pulse = 0.7 + 0.3 * Math.sin(pulseT + this.po);
+          const a = this.alpha * pulse;
+          const [r, g, b] = GOLD;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r * pulse, 0, Math.PI * 2);
+          const gr = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 4);
+          gr.addColorStop(0, `rgba(${r},${g},${b},${a})`);
+          gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          ctx.fillStyle = gr;
+          ctx.fill();
+        }
+      }
+
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width  = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, W, H);
+        pulseT += 0.007;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+            const d  = Math.sqrt(dx*dx + dy*dy);
+            if (d < 160) {
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = `rgba(201,177,138,${(1 - d / 160) * 0.25})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+          nodes[i].update(); nodes[i].draw();
+        }
+        rafId = requestAnimationFrame(loop);
+      }
+
+      resize();
+      nodes = Array.from({ length: 50 }, () => new Node());
+      window.addEventListener('resize', resize, { passive: true });
+      loop();
+    })();
+
+    // ── Password toggle ────────────────────────────────────────
+    const tokenInput = document.getElementById('token');
+    const eyeIcon    = document.getElementById('eyeIcon');
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const show = tokenInput.type === 'password';
+      tokenInput.type = show ? 'text' : 'password';
+      eyeIcon.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
+    });
+
+    // ── Form submit ────────────────────────────────────────────
+    const form       = document.getElementById('loginForm');
+    const loginBtn   = document.getElementById('loginBtn');
+    const btnText    = document.getElementById('btnText');
+    const errorMsg   = document.getElementById('error-msg');
+    const errorText  = document.getElementById('error-text');
+    const successMsg = document.getElementById('success-msg');
+
+    function showError(msg) {
+      errorText.textContent = msg;
+      errorMsg.classList.add('visible');
+      successMsg.classList.remove('visible');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.classList.remove('visible');
+      loginBtn.disabled = true;
+      btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying…';
+
+      try {
+        const res  = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ token: tokenInput.value })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          successMsg.classList.add('visible');
+          btnText.innerHTML = '<i class="fas fa-check"></i> Redirecting…';
+          setTimeout(() => window.location.href = '/admin', 900);
+        } else {
+          showError(data.error || 'Invalid token. Access denied.');
+          btnText.innerHTML = '<i class="fas fa-unlock-keyhole"></i> Sign In';
+          loginBtn.disabled = false;
+        }
+      } catch (err) {
+        showError('Could not connect to server. Is it running?');
+        btnText.innerHTML = '<i class="fas fa-unlock-keyhole"></i> Sign In';
+        loginBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
